@@ -5,6 +5,8 @@ import ProductsFilter from "@/components/products-filter";
 import { revalidateTag } from "next/cache";
 import ProductsPagination from "@/components/products-pagination";
 import ProductsList from "@/components/products-list";
+import { Suspense } from "react";
+import ProductsListLoading from "@/components/products-list-loading";
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
@@ -24,7 +26,9 @@ export default async function Home({ searchParams }: PageProps) {
 
       <ProductsFilter refetchProducts={refetchProducts} />
 
-      <ProductsList search={search} perPage={perPage} offset={offset} />
+      <Suspense fallback={<ProductsListLoading />}>
+        <ProductsList search={search} perPage={perPage} offset={offset} />
+      </Suspense>
 
       <ProductsPagination refetchProducts={refetchProducts} />
     </main>

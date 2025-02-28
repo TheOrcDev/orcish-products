@@ -13,6 +13,8 @@ export const getProducts = unstable_cache(async (params: GetProductsParams): Pro
     const res = await fetch(`https://api.escuelajs.co/api/v1/products/?title=${params.search}&offset=${params.offset}&limit=${params.perPage}`);
     const data = await res.json();
 
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     return data;
 }, ["products"], {
     tags: ["products"],
